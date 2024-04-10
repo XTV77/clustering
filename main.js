@@ -72,4 +72,5 @@ document.getElementById("sumbitNumber").addEventListener("click", () => {
   let input = document.querySelector(".inputnum");
   console.log(input.value);
   localStorage.setItem("my local", String(input.value));
+  sessionStorage.setItem("our local item", String(input.value));
 });
