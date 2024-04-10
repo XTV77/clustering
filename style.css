@@ -117,3 +117,9 @@ body {
   height: 10px;
   background-color: black;
 }
+
+.inputnum {
+  border: 1px solid black;
+  width: 100px;
+  height: 20px;
+}

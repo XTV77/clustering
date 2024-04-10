@@ -1,4 +1,5 @@
 import A from "./var.js";
+import * as import2 from "./localJS.js";
 console.log(A);
 
 const rows = 10; //кількість об'єктів
@@ -66,3 +67,9 @@ console.log(metricDistance(objectList[4], objectList[3]));
 console.timeEnd("time");
 const rootElement = document.getElementById("root");
 console.log(rootElement);
+
+document.getElementById("sumbitNumber").addEventListener("click", () => {
+  let input = document.querySelector(".inputnum");
+  console.log(input.value);
+  localStorage.setItem("my local", String(input.value));
+});
