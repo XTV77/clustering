@@ -1,6 +1,6 @@
-import A from "./var.js";
-import * as import2 from "./localJS.js";
-console.log(A);
+// import A from "./var.js";
+// import * as import2 from "./localJS.js";
+// console.log(A);
 
 const rows = 10; //кількість об'єктів
 const columns = 2; //кількість характеристик
@@ -68,9 +68,4 @@ console.timeEnd("time");
 const rootElement = document.getElementById("root");
 console.log(rootElement);
 
-document.getElementById("sumbitNumber").addEventListener("click", () => {
-  let input = document.querySelector(".inputnum");
-  console.log(input.value);
-  localStorage.setItem("my local", String(input.value));
-  sessionStorage.setItem("our local item", String(input.value));
-});
+localStorage.clear();
