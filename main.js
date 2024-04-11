@@ -1,17 +1,15 @@
-// import A from "./var.js";
-// import * as import2 from "./localJS.js";
-// console.log(A);
+import module from "./module.js";
 
 const rows = 10; //кількість об'єктів
 const columns = 2; //кількість характеристик
 
 console.time("time");
-function metricDistance(X, Y) {
-  let d = 0;
+function d(X, Y) {
+  let dist = 0;
   for (let i = 0; i < columns; i++) {
-    d += (X[i] - Y[i]) ** 2;
+    dist += (X[i] - Y[i]) ** 2;
   }
-  return Math.sqrt(d);
+  return Math.sqrt(dist);
 }
 function arrayStandartization(inputArr) {
   const arrLength = inputArr.length;
@@ -36,19 +34,22 @@ function arrayStandartization(inputArr) {
   return standartedArr;
 }
 function lowestDistance(list) {
-  let lowestD = 1000;
+  let lowestD = 100;
   let cluster = {
-    conectedObj: [],
+    finded: [],
+    pairs: [],
     distance: []
   };
-  for (let i = 0; i < rows; i++) {
-    lowestD = 1000;
-    for (let j = 0; j < rows; j++) {
-      if (metricDistance(list[i], list[j]) < lowestD) {
-        cluster.conectedObj[i] = [i, j];
-        cluster.distance[i] = metricDistance(list[i], list[j]);
+  for (let k = 0; k < rows - 1; k++) {
+    lowestD = 100;
+    for (let i = 0; i < rows; i++) {
+      for (let j = 0; j < i; j++) {
+        if (d(list[i], list[j]) < lowestD) {
+          lowestD = d(list[i], list[j]);
+        }
       }
     }
+    console.log(lowestD);
   }
 }
 
@@ -61,11 +62,6 @@ let objectList = [];
 for (let i = 0; i < rows; i++) {
   objectList[i] = [standartedPrice[i], standartedHP[i]];
 }
+lowestDistance(objectList);
 
-console.log(objectList);
-console.log(metricDistance(objectList[4], objectList[3]));
 console.timeEnd("time");
-const rootElement = document.getElementById("root");
-console.log(rootElement);
-
-localStorage.clear();
