@@ -1,43 +1,47 @@
-import module from "./module.js";
+import * as mod from "./module.js";
 import dataStandartization from "./standartization_module.js";
 const rows = 10; //кількість об'єктів
 const columns = 2; //кількість характеристик
 
 console.time("time");
-function d(X, Y) {
+function EuclidDistance(X, Y) {
+  //x,Y = massive
   let dist = 0;
   for (let i = 0; i < columns; i++) {
     dist += (X[i] - Y[i]) ** 2;
   }
   return Math.sqrt(dist);
 }
-
-function Wdistance(list) {
-  let minDistance = 10 ** 10;
-  let index = [];
-  let inCluster = [];
-  let cluster = {
-    pair: [],
-    distance: []
-  };
-  for (let k = 0; k < rows - 1; k++) {
-    minDistance = 10 ** 10;
-    for (let i = 0; i < rows; i++) {
-      for (let j = 0; j < i; j++) {
-        if (
-          d(list[i], list[j]) < minDistance &&
-          !(inCluster.includes(i) && inCluster.includes(j))
-        ) {
-          minDistance = d(list[i], list[j]);
-          index = [i, j];
-        }
-      }
-    }
-    inCluster.push(index[0], index[1]);
-    cluster.pair.push(index);
-    cluster.distance.push(minDistance);
+function distanceCalculation(list) {
+  let distList = [];
+  for (let i = 0; i < rows; i++) {
+    for (let j = 0; j < rows; j++)
+      distList.push(EuclidDistance(list[i].points, list[j].points));
+    list[i].distance = distList;
+    distList = [];
   }
-  console.log(cluster);
+}
+function clusterConection(cluster_1, cluster_2) {
+  const newCluster = Object.create(cluster);
+  let distList = [];
+  newCluster.centroid = cluster_1.centroid.concat(cluster_2.centroid);
+  for (let i = 0; i < rows; i++) {
+    if (
+      (cluster_1.distance[i] < cluster_2.distance[i] &&
+        cluster_1.distance[i] != 0) ||
+      (cluster_1.distance[i] > cluster_2.distance[i] &&
+        cluster_2.distance[i] == 0)
+    )
+      distList.push(cluster_1.distance[i]);
+    else distList.push(cluster_2.distance[i]);
+  }
+  newCluster.distance = distList;
+  return newCluster;
+}
+
+function minDistance(list) {
+  let minDistance = Infinity;
+  let index = [];
 }
 
 let price = [5500, 5000, 3200, 5500, 5500, 13000, 16600, 12200, 16000, 16000];
@@ -48,6 +52,7 @@ let standartedHP = dataStandartization(HP);
 let clustersList = [];
 const cluster = {
   centroid: [],
+  distance: [],
   points: []
 };
 for (let i = 0; i < rows; i++) {
@@ -55,6 +60,7 @@ for (let i = 0; i < rows; i++) {
   (clustersList[i].centroid = [i]),
     (clustersList[i].points = [standartedPrice[i], standartedHP[i]]);
 }
-console.log(clustersList);
+distanceCalculation(clustersList);
+console.log(clusterConection(clustersList[8], clustersList[9]));
 
 console.timeEnd("time");
