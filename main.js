@@ -1,5 +1,5 @@
 import module from "./module.js";
-
+import dataStandartization from "./standartization_module.js";
 const rows = 10; //кількість об'єктів
 const columns = 2; //кількість характеристик
 
@@ -11,57 +11,50 @@ function d(X, Y) {
   }
   return Math.sqrt(dist);
 }
-function arrayStandartization(inputArr) {
-  const arrLength = inputArr.length;
-  let standartedArr = [];
-  let avgInputArr = 0;
-  let standartDeviation = 0;
-  for (let i = 0; i < arrLength; i++) {
-    avgInputArr += inputArr[i];
-  }
-  avgInputArr /= arrLength;
-  avgInputArr = parseFloat(avgInputArr.toFixed(4));
-  for (let i = 0; i < arrLength; i++) {
-    standartDeviation += (inputArr[i] - avgInputArr) ** 2;
-  }
-  standartDeviation = Math.sqrt(standartDeviation / (arrLength - 1)); //Некореговане стандартне відхилення (кориговане n-1)
-  standartDeviation = parseFloat(standartDeviation.toFixed(4));
-  for (let i = 0; i < arrLength; i++) {
-    standartedArr[i] = parseFloat(
-      ((inputArr[i] - avgInputArr) / standartDeviation).toFixed(4)
-    );
-  }
-  return standartedArr;
-}
-function lowestDistance(list) {
-  let lowestD = 100;
+
+function Wdistance(list) {
+  let minDistance = 10 ** 10;
+  let index = [];
+  let inCluster = [];
   let cluster = {
-    finded: [],
-    pairs: [],
+    pair: [],
     distance: []
   };
   for (let k = 0; k < rows - 1; k++) {
-    lowestD = 100;
+    minDistance = 10 ** 10;
     for (let i = 0; i < rows; i++) {
       for (let j = 0; j < i; j++) {
-        if (d(list[i], list[j]) < lowestD) {
-          lowestD = d(list[i], list[j]);
+        if (
+          d(list[i], list[j]) < minDistance &&
+          !(inCluster.includes(i) && inCluster.includes(j))
+        ) {
+          minDistance = d(list[i], list[j]);
+          index = [i, j];
         }
       }
     }
-    console.log(lowestD);
+    inCluster.push(index[0], index[1]);
+    cluster.pair.push(index);
+    cluster.distance.push(minDistance);
   }
+  console.log(cluster);
 }
 
 let price = [5500, 5000, 3200, 5500, 5500, 13000, 16600, 12200, 16000, 16000];
 let HP = [100, 130, 550, 510, 450, 450, 510, 140, 230, 250];
-let standartedPrice = arrayStandartization(price);
-let standartedHP = arrayStandartization(HP);
+let standartedPrice = dataStandartization(price);
+let standartedHP = dataStandartization(HP);
 
-let objectList = [];
+let clustersList = [];
+const cluster = {
+  centroid: [],
+  points: []
+};
 for (let i = 0; i < rows; i++) {
-  objectList[i] = [standartedPrice[i], standartedHP[i]];
+  clustersList[i] = Object.create(cluster);
+  (clustersList[i].centroid = [i]),
+    (clustersList[i].points = [standartedPrice[i], standartedHP[i]]);
 }
-lowestDistance(objectList);
+console.log(clustersList);
 
 console.timeEnd("time");
