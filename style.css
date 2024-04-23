@@ -104,22 +104,20 @@ body {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  background-color: rgb(179, 179, 179);
 }
 
 #root {
-  height: 90%;
-  aspect-ratio: 1/1;
+  position: relative;
+  height: 360px;
+  aspect-ratio: 4/3;
   border: 1px solid black;
+  padding: 2px;
 }
 
-.inputDataField {
-  width: 10px;
-  height: 10px;
-  background-color: black;
-}
-
-.inputnum {
+.branch {
+  position: absolute;
   border: 1px solid black;
-  width: 100px;
-  height: 20px;
+  border-bottom: none;
+  background-color: rgb(179, 179, 179);
 }

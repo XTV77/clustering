@@ -1,4 +1,4 @@
-function clusterConcat(clustersArray, ind) {
+function clusterConcat(clustersArray, ind, dist) {
   let clustersIndex = [];
   for (let i = 0; i < clustersArray.length; i++) {
     if (clustersArray[i].includes(ind[0])) clustersIndex.push(i);
@@ -8,7 +8,8 @@ function clusterConcat(clustersArray, ind) {
   clustersArray[clustersIndex[0]] = clustersArray[clustersIndex[0]].concat(
     clustersArray[clustersIndex[1]]
   );
-  nodes.unshift(clustersArray[clustersIndex[0]]);
+  nodes.clusterID.unshift(clustersArray[clustersIndex[0]]);
+  nodes.clusterDist.unshift(dist);
   clustersArray.splice(clustersIndex[1], 1);
 }
 function hierarchicalClustering(inputObjectList) {
@@ -32,12 +33,19 @@ function hierarchicalClustering(inputObjectList) {
       }
     }
     inputListCopy[index[0]].distance[index[1]] = 0;
-    clusterConcat(clusters, [
-      inputListCopy[index[0]].identifier[0],
-      inputListCopy[index[1]].identifier[0]
-    ]);
+    clusterConcat(
+      clusters,
+      [
+        inputListCopy[index[0]].identifier[0],
+        inputListCopy[index[1]].identifier[0]
+      ],
+      minDistance
+    );
   }
   return clusters;
 }
 export default hierarchicalClustering;
-export let nodes = [];
+export let nodes = {
+  clusterID: [],
+  clusterDist: []
+};

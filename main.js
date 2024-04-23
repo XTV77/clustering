@@ -1,6 +1,7 @@
 import * as mod from "./module.js";
 import dataStandartization from "./standartization_module.js";
 import hierarchicalClustering, { nodes } from "./clustering_module.js";
+import { createTreeStructure, sameArray } from "./tree_module.js";
 const rows = 10; //кількість об'єктів
 const columns = 2; //кількість характеристик
 const Object_cluster = {
@@ -42,49 +43,45 @@ for (let i = 0; i < rows; i++) {
 
 distanceCalculation(objectList);
 let root = hierarchicalClustering(objectList)[0];
-//console.log(root, nodes);
 
-// let arrTest = [1, 2, 3, 4, 5];
-// function recurs(x) {
-//   if (x.length < 3) return { node_1: x[0], node_2: x[1] };
-
-//   return { node_1: x.shift(), node_2: recurs(x) };
-// }
-function nodecreator(cluster, node) {
-  if (cluster.length < 2) return { node_1: cluster[0].toString() };
-  if (cluster.length < 3)
-    return { node_1: cluster[0].toString(), node_2: cluster[1].toString() };
-  for (let i = 0; i < node.length; i++) {
-    if (
-      cluster.length == node[i].length &&
-      cluster[0] == node[i][0] &&
-      cluster[cluster.length - 1] == node[i][cluster.length - 1]
-    ) {
-      name = node[0].toString();
-      node.splice(i, 1);
-      break;
-    }
-  }
-  let node1 = [cluster[0]],
-    node2 = cluster.slice(1, cluster.length);
-  for (let i = 0; i < node.length; i++) {
-    if (
-      cluster[0] == node[i][0] &&
-      node[i][node[i].length - 1] == cluster[node[i].length - 1]
-    ) {
-      node1 = cluster.slice(0, node[i].length);
-      node2 = cluster.slice(node[i].length, cluster.length);
-      break;
-    }
-  }
-  return {
-    node_1: nodecreator(node1, node),
-    node_2: nodecreator(node2, node)
-  };
+let nodesCopy = {};
+for (let key in nodes) {
+  nodesCopy[key] = [...nodes[key]];
 }
-let nodesCopy = [...nodes];
-const dataTree = nodecreator(root, nodesCopy);
-const dataTreeJSON = JSON.stringify(dataTree);
-console.log(dataTreeJSON);
 
+const dataTree = createTreeStructure(root, nodesCopy.clusterID);
+const dataTreeJSON = JSON.stringify(dataTree);
+const rootElement = document.getElementById("root");
+
+function renderTree(tree, X) {
+  let L = X,
+    R = X;
+  if (tree.root.length < 2) return;
+  let Y = 0;
+  for (let i = 0; i < nodes.clusterID.length; i++) {
+    if (sameArray(tree.root, nodes.clusterID[i])) {
+      Y = nodes.clusterDist[i];
+    }
+  }
+  leftBranch(X, Y);
+  if (typeof tree.node_2 == "object") {
+    renderTree(tree.node_1, (L += 25));
+    renderTree(tree.node_2, (R -= 50));
+  }
+}
+let num = 1;
+function leftBranch(X, Y) {
+  const newBranch = document.createElement("div");
+  newBranch.classList.value = "branch";
+  newBranch.style.left = `calc(50% - ${X}px)`;
+  newBranch.style.bottom = `2px`;
+  newBranch.style.width = `${40 + Y * 20}px`;
+  newBranch.style.height = `${Y * 250}px`;
+  newBranch.innerHTML = `${num}`;
+  rootElement.append(newBranch);
+  num++;
+}
+function rightBranch() {}
+
+renderTree(dataTree, 40);
 console.timeEnd("time");
