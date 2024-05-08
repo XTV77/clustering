@@ -22,22 +22,22 @@ function createTreeStructure(cluster, nodeSet) {
       break;
     }
   }
-  let nodeSet1 = [cluster[0]],
-    nodeSet2 = cluster.slice(1, cluster.length);
+  let leftNodes = [cluster[0]],
+    rightNodes = cluster.slice(1, cluster.length);
   for (let i = 0; i < nodeSet.length; i++) {
     if (
       cluster[0] == nodeSet[i][0] &&
       nodeSet[i][nodeSet[i].length - 1] == cluster[nodeSet[i].length - 1]
     ) {
-      nodeSet1 = cluster.slice(0, nodeSet[i].length);
-      nodeSet2 = cluster.slice(nodeSet[i].length, cluster.length);
+      leftNodes = cluster.slice(0, nodeSet[i].length);
+      rightNodes = cluster.slice(nodeSet[i].length, cluster.length);
       break;
     }
   }
   return {
     root: cluster,
-    node_1: createTreeStructure(nodeSet1, nodeSet),
-    node_2: createTreeStructure(nodeSet2, nodeSet)
+    node_1: createTreeStructure(leftNodes, nodeSet),
+    node_2: createTreeStructure(rightNodes, nodeSet)
   };
 }
 

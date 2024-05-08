@@ -8,14 +8,15 @@ function renderTree(
   clusterPosition
 ) {
   if (dataTreeStructure.root.length < 2) return;
-  let branchHeight = 0;
+  let clusterHeight = 0;
   for (let i = 0; i < nodes.clusterID.length; i++) {
     if (sameArray(dataTreeStructure.root, nodes.clusterID[i])) {
-      branchHeight = nodes.clusterDist[i];
+      clusterHeight = nodes.clusterDist[i];
     }
   }
   const newSubcluster = document.createElement("div");
-  clusterPosition(newSubcluster, clusterWidth, branchHeight);
+  clusterPosition(newSubcluster, clusterWidth, clusterHeight);
+  newSubcluster.innerHTML = `[${dataTreeStructure.root}]`;
   renderRoot.append(newSubcluster);
   let newRoot = newSubcluster;
 
@@ -35,29 +36,31 @@ function renderTree(
   }
 }
 
+const standartedHeight = 250;
+const standartedWidth = 300;
 function leftPosition(cluster, width, height) {
   cluster.classList.value = "branch";
   cluster.style.left = `0px`;
   cluster.style.bottom = "0px";
   cluster.style.transform = `translate(${-50}%)`;
-  cluster.style.width = `${200 * width + 10}px`;
-  cluster.style.height = `${height * 250}px`;
+  cluster.style.width = `${standartedWidth * width + 10}px`;
+  cluster.style.height = `${height * standartedHeight}px`;
 }
 function rightPosition(cluster, width, height) {
   cluster.classList.value = "branch";
   cluster.style.right = `0px`;
   cluster.style.bottom = "0px";
   cluster.style.transform = `translate(${50}%)`;
-  cluster.style.width = `${200 * width + 10}px`;
-  cluster.style.height = `${height * 250}px`;
+  cluster.style.width = `${standartedWidth * width + 10}px`;
+  cluster.style.height = `${height * standartedHeight}px`;
 }
 function midlePosition(cluster, width, height) {
   cluster.classList.value = "branch";
   cluster.style.bottom = "0px";
   cluster.style.left = `calc(50% - ${0}px)`;
   cluster.style.transform = `translate(${-50}%)`;
-  cluster.style.width = `${200 * width + 10}px`;
-  cluster.style.height = `${height * 250}px`;
+  cluster.style.width = `${standartedWidth * width + 10}px`;
+  cluster.style.height = `${height * standartedHeight}px`;
 }
 
 export default renderTree;

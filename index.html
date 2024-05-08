@@ -16,15 +16,25 @@
     ></script>
     <!-- Підключння Babel -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <!-- JSX.js -->
-    <script src="react.js" type="text/babel"></script>
   </head>
   <body>
-    <div class="inputDataField"></div>
     <div class="wrapper">
-      <div id="root"></div>
+      <div class="menu">
+        <div id="rowsXcolumns">
+          <p>кількість об`єктів</p>
+          <input id="getRows" type="number" placeholder="..." />
+          <p>X кількість критеріїв</p>
+          <input id="getColumns" type="number" placeholder="..." />
+          <div class="acceptButton"></div>
+        </div>
+        <div id="dataInput"></div>
+        <button id="createTree">побудувати дерево</button>
+        <button id="open_close"></button>
+      </div>
+      <div id="dendograme"></div>
     </div>
-
-    <script src="main.js" type="module"></script>
+    <!-- JSX.js -->
+    <script src="script/react.js" type="text/babel"></script>
+    <script src="script/main.js" type="module"></script>
   </body>
 </html>
