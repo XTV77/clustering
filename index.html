@@ -19,19 +19,46 @@
   </head>
   <body>
     <div class="wrapper">
-      <div class="menu">
+      <div class="input-data__menu">
         <div id="rowsXcolumns">
           <p>кількість об`єктів</p>
           <input id="getRows" type="number" placeholder="..." />
           <p>X кількість критеріїв</p>
           <input id="getColumns" type="number" placeholder="..." />
-          <div class="acceptButton"></div>
+          <div class="get-rows-columns__button"></div>
         </div>
-        <div id="dataInput"></div>
-        <button id="createTree">побудувати дерево</button>
-        <button id="open_close"></button>
+        <div id="data__inputs"></div>
+        <div class="buttons-container">
+          <div>
+            <input type="number" id="newHeight" placeholder="height..." />
+            <input type="number" id="newWidth" placeholder="width..." />
+          </div>
+          <button id="change-size__button">змінити розмір</button>
+          <div class="radio-button">
+            <div>
+              <input
+                type="radio"
+                name="distance_function"
+                id="Euclid-distance"
+                checked
+              />
+              <p>Евклідова відстань</p>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="distance_function"
+                id="ultrametric-distance"
+              />
+              <p>Ультраметрична відстань</p>
+            </div>
+          </div>
+          <button id="create-tree__button">побудувати дерево</button>
+        </div>
+
+        <button id="open-close__button"></button>
       </div>
-      <div id="dendograme"></div>
+      <div id="dendograme-area"></div>
     </div>
     <!-- JSX.js -->
     <script src="script/react.js" type="text/babel"></script>

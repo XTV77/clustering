@@ -114,10 +114,10 @@ body {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  background-color: #535878;
+  background-color: #bce6cb;
 }
 
-#dendograme {
+#dendograme-area {
   position: relative;
   height: 80%;
   aspect-ratio: 4/3;
@@ -132,10 +132,10 @@ body {
   position: absolute;
   border: 2px solid black;
   border-bottom: none;
-  background-color: #535878;
+  background-color: #bce6cb;
 }
 
-.menu {
+.input-data__menu {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -153,24 +153,24 @@ body {
   width: 100%;
   height: 90%;
   top: -88%;
-  background-color: #7688a5;
+  background-color: rgba(47, 31, 173, 0.968627451);
   z-index: 1;
   -webkit-transition-duration: 800ms;
           transition-duration: 800ms;
 }
 
-#open_close {
+#open-close__button {
   position: absolute;
   bottom: -16px;
   left: calc(50% - 20px);
   width: 40px;
   aspect-ratio: 1/1;
   border-radius: 8px;
-  background-color: #7688a5;
+  background-color: rgba(47, 31, 173, 0.968627451);
   -webkit-transform: rotate(45deg);
           transform: rotate(45deg);
 }
-#open_close::before {
+#open-close__button::before {
   content: "";
   position: absolute;
   left: calc(50% - 18px);
@@ -218,7 +218,7 @@ body {
   color: rgba(0, 0, 0, 0.815);
 }
 
-.acceptButton {
+.get-rows-columns__button {
   width: 20px;
   aspect-ratio: 1/1;
   background-image: url(sourse/accept_icon.png);
@@ -228,7 +228,7 @@ body {
   margin-left: 10px;
 }
 
-#dataInput {
+#data__inputs {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -241,7 +241,7 @@ body {
   -webkit-transform: translate(-44px);
           transform: translate(-44px);
 }
-#dataInput input {
+#data__inputs input {
   text-align: center;
   background-color: rgba(255, 255, 255, 0);
   border: 1px solid black;
@@ -268,12 +268,52 @@ body {
   width: 76px;
 }
 
-#createTree {
+.buttons-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 8px;
   position: absolute;
-  bottom: 40px;
+  right: 2px;
+  background-color: rgba(0, 0, 0, 0);
+  padding: 8px;
+}
+.buttons-container input {
+  width: 50px;
+  padding: 2px;
+  border-radius: 4px;
+}
+.buttons-container button {
+  -webkit-transition-duration: 500ms;
+          transition-duration: 500ms;
+  right: 10px;
+  bottom: 50%;
   padding: 4px 8px;
   border: 1px solid black;
-  border-radius: 8px;
-  background-color: #535878;
-  color: #d1d1d1;
+  border-radius: 4px;
+  background-color: #342989;
+  color: #ffffff;
+}
+
+.radio-button {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  gap: 10px 0;
+}
+.radio-button div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
 }

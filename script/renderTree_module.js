@@ -1,66 +1,63 @@
 import { nodes } from "./clustering_module.js";
 import { sameArray } from "./dataTreeStructure_module.js";
 
-function renderTree(
-  dataTreeStructure,
-  renderRoot,
-  clusterWidth,
-  clusterPosition
-) {
+export function removeTree() {
+  const allBranch = document.querySelectorAll(".branch");
+  allBranch.forEach((el) => el.remove());
+}
+
+function renderTree(dataTreeStructure, renderRoot, width, clusterPosition) {
   if (dataTreeStructure.root.length < 2) return;
-  let clusterHeight = 0;
+  let height = 0;
   for (let i = 0; i < nodes.clusterID.length; i++) {
     if (sameArray(dataTreeStructure.root, nodes.clusterID[i])) {
-      clusterHeight = nodes.clusterDist[i];
+      height = nodes.clusterDist[i];
     }
   }
   const newSubcluster = document.createElement("div");
-  clusterPosition(newSubcluster, clusterWidth, clusterHeight);
+  clusterPosition(newSubcluster, width, height);
   newSubcluster.innerHTML = `[${dataTreeStructure.root}]`;
   renderRoot.append(newSubcluster);
   let newRoot = newSubcluster;
 
-  if (typeof dataTreeStructure.node_2 == "object") {
-    renderTree(
-      dataTreeStructure.node_1,
-      newRoot,
-      clusterWidth / 2,
-      leftPosition
-    );
-    renderTree(
-      dataTreeStructure.node_2,
-      newRoot,
-      clusterWidth / 2,
-      rightPosition
-    );
+  if (typeof dataTreeStructure.node_2 === "object") {
+    renderTree(dataTreeStructure.node_1, newRoot, width / 2, leftPosition);
+    renderTree(dataTreeStructure.node_2, newRoot, width / 2, rightPosition);
   }
 }
 
-const standartedHeight = 250;
-const standartedWidth = 300;
+let branchHeight = 50;
+let branchdWidth = 50;
+export function getSize(height, width) {
+  if (height !== "" && parseInt(height) > 0 && parseInt(height) < 500)
+    branchHeight = parseInt(height);
+  if (width !== "" && parseInt(width) > 0 && parseInt(width) < 500)
+    branchdWidth = parseInt(width);
+}
+
 function leftPosition(cluster, width, height) {
   cluster.classList.value = "branch";
   cluster.style.left = `0px`;
   cluster.style.bottom = "0px";
   cluster.style.transform = `translate(${-50}%)`;
-  cluster.style.width = `${standartedWidth * width + 10}px`;
-  cluster.style.height = `${height * standartedHeight}px`;
+  cluster.style.width = `${branchdWidth * width + 10}px`;
+  cluster.style.height = `${height * branchHeight}px`;
 }
 function rightPosition(cluster, width, height) {
   cluster.classList.value = "branch";
   cluster.style.right = `0px`;
   cluster.style.bottom = "0px";
   cluster.style.transform = `translate(${50}%)`;
-  cluster.style.width = `${standartedWidth * width + 10}px`;
-  cluster.style.height = `${height * standartedHeight}px`;
+  cluster.style.width = `${branchdWidth * width + 10}px`;
+  cluster.style.height = `${height * branchHeight}px`;
 }
 function midlePosition(cluster, width, height) {
   cluster.classList.value = "branch";
   cluster.style.bottom = "0px";
   cluster.style.left = `calc(50% - ${0}px)`;
   cluster.style.transform = `translate(${-50}%)`;
-  cluster.style.width = `${standartedWidth * width + 10}px`;
-  cluster.style.height = `${height * standartedHeight}px`;
+  cluster.style.width = `${branchdWidth * width + 10}px`;
+  cluster.style.height = `${height * branchHeight}px`;
 }
 
 export default renderTree;

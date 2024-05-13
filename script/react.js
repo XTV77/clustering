@@ -1,4 +1,4 @@
-const rootElement = document.getElementById("dataInput");
+const rootElement = document.getElementById("data__inputs");
 
 function generateGird(countOFrows, countOFcolumns) {
   const rows = [];
@@ -23,15 +23,17 @@ function generateGird(countOFrows, countOFcolumns) {
 //***********************************************************//
 //////////////////////////////////////////////////////////////
 
-document.querySelector(".acceptButton").addEventListener("click", () => {
-  setTimeout(
-    generateGird(
-      parseFloat(localStorage.getItem("countOFrows")),
-      parseFloat(localStorage.getItem("countOFcolumns"))
-    ),
-    10
-  );
-});
+document
+  .querySelector(".get-rows-columns__button")
+  .addEventListener("click", () => {
+    setTimeout(
+      generateGird(
+        parseFloat(localStorage.getItem("countOFrows")),
+        parseFloat(localStorage.getItem("countOFcolumns"))
+      ),
+      10
+    );
+  });
 
 //////////////////////////////////////////////////////////////////
 //*************************************************************//

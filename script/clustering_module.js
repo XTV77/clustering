@@ -12,6 +12,7 @@ function clusterConcat(clustersArray, identifier, dist) {
   nodes.clusterDist.unshift(dist);
   clustersArray.splice(clusterIndex[1], 1);
 }
+
 function hierarchicalClustering(inputObjectList) {
   const listLength = inputObjectList.length;
   let clustersArray = [];
@@ -25,7 +26,7 @@ function hierarchicalClustering(inputObjectList) {
     for (let i = 1; i < listLength; i++) {
       for (let j = 0; j < i; j++) {
         let d = inputObjectList[i].distance[j];
-        if (d < minDistance && d != 0) {
+        if (d < minDistance && d !== 0) {
           minDistance = d;
           index = [i, j];
         }
