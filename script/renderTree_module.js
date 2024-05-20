@@ -26,8 +26,8 @@ function renderTree(dataTreeStructure, renderRoot, width, clusterPosition) {
   }
 }
 
-let branchHeight = 50;
-let branchdWidth = 50;
+let branchHeight = 100;
+let branchdWidth = 100;
 export function getSize(height, width) {
   if (height !== "" && parseInt(height) > 0 && parseInt(height) < 500)
     branchHeight = parseInt(height);

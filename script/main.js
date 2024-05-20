@@ -49,6 +49,15 @@ function ultrametricDistance(X, Y) {
   return Math.sqrt(sum) / (1 + Math.sqrt(sum));
 }
 
+function maxUltrametricDistance(X, Y) {
+  //x,Y = massive
+  let max = 0;
+  for (let i = 0; i < columns; i++) {
+    if (Math.abs(X[i] - Y[i]) > max) max = Math.abs(X[i] - Y[i]);
+  }
+  return max;
+}
+
 function distanceCalculation(inputObjectList, distFunc) {
   let distList = [];
   for (let i = 0; i < rows; i++) {
@@ -109,14 +118,14 @@ document.getElementById("create-tree__button").addEventListener("click", () => {
   const createTreeButton = document.getElementById("create-tree__button");
   createTreeButton.style.boxShadow = "";
 
-  let allAttributes = document.getElementsByClassName("row");
+  let allAttributesValuesList = document.getElementsByClassName("row");
   let IDsList = document.getElementsByClassName("identifier");
 
   attributesValueList = [];
   let newAttrColumn = [];
-  for (let i = 0; i < allAttributes.length; i++) {
-    if (allAttributes[i].value === "") newAttrColumn.push(0);
-    else newAttrColumn.push(parseFloat(allAttributes[i].value));
+  for (let i = 0; i < allAttributesValuesList.length; i++) {
+    if (allAttributesValuesList[i].value === "") newAttrColumn.push(0);
+    else newAttrColumn.push(parseFloat(allAttributesValuesList[i].value));
     if (newAttrColumn.length === rows) {
       attributesValueList.push(dataStandartization(newAttrColumn));
       newAttrColumn = [];
@@ -135,24 +144,22 @@ document.getElementById("create-tree__button").addEventListener("click", () => {
     }
     objectList[i].attributeValue = attrArray;
   }
-  removeTree();
-  try {
-    if (document.getElementById("Euclid-distance").checked) {
-      distanceCalculation(objectList, EuclidDistance);
-      console.log(objectList);
-    } else {
-      distanceCalculation(objectList, ultrametricDistance);
-      console.log(objectList);
-    }
 
-    const mainCluster = hierarchicalClustering(objectList);
-    let nodesIDCopy = [...nodes.clusterID];
-    const dataTree = createTreeStructure(mainCluster, nodesIDCopy);
-    const rootElement = document.getElementById("dendograme-area");
-    renderTree(dataTree, rootElement, 1, midlePosition);
-  } catch {
-    alert("error");
+  removeTree();
+  console.time("metric");
+  if (document.getElementById("Euclid-distance").checked) {
+    distanceCalculation(objectList, EuclidDistance);
+  } else {
+    distanceCalculation(objectList, maxUltrametricDistance);
   }
+  console.timeEnd("metric");
+
+  const mainCluster = hierarchicalClustering(objectList);
+  let nodesIDCopy = [...nodes.clusterID];
+
+  const dataTree = createTreeStructure(mainCluster, nodesIDCopy);
+  const rootElement = document.getElementById("dendograme-area");
+  renderTree(dataTree, rootElement, 1, midlePosition);
 });
 
 document.getElementById("change-size__button").addEventListener("click", () => {
