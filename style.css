@@ -114,7 +114,7 @@ body {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  background-color: #bce6cb;
+  background-color: #538576;
 }
 
 #dendograme-area {
@@ -132,7 +132,8 @@ body {
   position: absolute;
   border: 2px solid black;
   border-bottom: none;
-  background-color: #bce6cb;
+  background-color: #538576;
+  color: #ffffff;
 }
 
 .input-data__menu {
@@ -153,7 +154,7 @@ body {
   width: 100%;
   height: 90%;
   top: -88%;
-  background-color: rgba(47, 31, 173, 0.968627451);
+  background-color: #1e613a;
   z-index: 1;
   -webkit-transition-duration: 800ms;
           transition-duration: 800ms;
@@ -166,7 +167,7 @@ body {
   width: 40px;
   aspect-ratio: 1/1;
   border-radius: 8px;
-  background-color: rgba(47, 31, 173, 0.968627451);
+  background-color: #1e613a;
   -webkit-transform: rotate(45deg);
           transform: rotate(45deg);
 }
@@ -298,7 +299,7 @@ body {
   padding: 4px 8px;
   border: 1px solid black;
   border-radius: 4px;
-  background-color: #342989;
+  background-color: #124326;
   color: #ffffff;
 }
 
@@ -316,4 +317,15 @@ body {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+}
+
+.distance-axis {
+  font-size: 12px;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  position: absolute;
+  left: 0;
+  -webkit-transform: translate(-95%);
+          transform: translate(-95%);
 }

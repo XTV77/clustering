@@ -14,10 +14,9 @@ function clusterConcat(clustersArray, identifier, dist) {
 }
 
 function hierarchicalClustering(inputObjectList) {
-  nodes = {
-    clusterID: [],
-    clusterDist: []
-  };
+  nodes.clusterID = [];
+  nodes.clusterDist = [];
+
   const listLength = inputObjectList.length;
   let clustersArray = [];
   for (let i = 0; i < listLength; i++) {

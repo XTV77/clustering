@@ -42,7 +42,7 @@
                 id="Euclid-distance"
                 checked
               />
-              <p>Евклідова відстань</p>
+              <p>Евклідова відстань [E(x,y)]</p>
             </div>
             <div>
               <input
@@ -50,7 +50,11 @@
                 name="distance_function"
                 id="ultrametric-distance"
               />
-              <p>Ультраметрична відстань</p>
+              <p>d(x,y) = E(x,y)/(1+E(x,y))</p>
+            </div>
+            <div>
+              <input type="radio" name="distance_function" id="max-distance" />
+              <p>d(x,y) = max{|x-y|}</p>
             </div>
           </div>
           <button id="create-tree__button">побудувати дерево</button>
@@ -63,5 +67,6 @@
     <!-- JSX.js -->
     <script src="script/react.js" type="text/babel"></script>
     <script src="script/main.js" type="module"></script>
+    <script src="script/renderTree_module.js" type="module"></script>
   </body>
 </html>

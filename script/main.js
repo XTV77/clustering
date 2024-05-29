@@ -1,10 +1,13 @@
+const mainRoot = document.getElementById("dendograme-area");
+
 import dataStandartization from "./standartization_module.js";
 import hierarchicalClustering, { nodes } from "./clustering_module.js";
 import { createTreeStructure, sameArray } from "./dataTreeStructure_module.js";
 import renderTree, {
   removeTree,
   getSize,
-  midlePosition
+  midlePosition,
+  rightPosition
 } from "./renderTree_module.js";
 
 const Object_cluster = {
@@ -32,7 +35,7 @@ let attributesValueList = [];
 //////////////////////////////////////////////////////////////
 
 function EuclidDistance(X, Y) {
-  //x,Y = massive
+  //x,Y = array
   let sum = 0;
   for (let i = 0; i < columns; i++) {
     sum += (X[i] - Y[i]) ** 2;
@@ -41,7 +44,7 @@ function EuclidDistance(X, Y) {
 }
 
 function ultrametricDistance(X, Y) {
-  //x,Y = massive
+  //x,Y = array
   let sum = 0;
   for (let i = 0; i < columns; i++) {
     sum += (X[i] - Y[i]) ** 2;
@@ -50,7 +53,7 @@ function ultrametricDistance(X, Y) {
 }
 
 function maxUltrametricDistance(X, Y) {
-  //x,Y = massive
+  //x,Y = array
   let max = 0;
   for (let i = 0; i < columns; i++) {
     if (Math.abs(X[i] - Y[i]) > max) max = Math.abs(X[i] - Y[i]);
@@ -118,11 +121,34 @@ document.getElementById("create-tree__button").addEventListener("click", () => {
   const createTreeButton = document.getElementById("create-tree__button");
   createTreeButton.style.boxShadow = "";
 
-  let allAttributesValuesList = document.getElementsByClassName("row");
+  /////////////////////////////////////////
+  // rows = 10;
+  // columns = 5;
+
   let IDsList = document.getElementsByClassName("identifier");
+  // let IDsList = [];
+  // for (let i = 0; i < rows; i++) {
+  //   IDsList.push(`${i + 1}`);
+  // }
+
+  let allAttributesValuesList = document.getElementsByClassName("row");
+  // let allAttributesValuesList = [
+  //   [1992, 2001, 1991, 2007, 2006, 1985, 2018, 2022, 2003, 1995],
+  //   [68, 217, 399, 133, 76, 128, 86, 230, 132, 479],
+  //   [32, 24, 18, 75, 89, 62, 19, 84, 68, 90],
+  //   [98, 31, 70, 89, 74, 32, 31, 31, 72, 47],
+  //   [18, 79, 15, 90, 69, 65, 49, 39, 8, 7]
+  // ].flat();
 
   attributesValueList = [];
   let newAttrColumn = [];
+  // for (let i = 0; i < allAttributesValuesList.length; i++) {
+  //   newAttrColumn.push(allAttributesValuesList[i]);
+  //   if (newAttrColumn.length === rows) {
+  //     attributesValueList.push(dataStandartization(newAttrColumn));
+  //     newAttrColumn = [];
+  //   }
+  // }
   for (let i = 0; i < allAttributesValuesList.length; i++) {
     if (allAttributesValuesList[i].value === "") newAttrColumn.push(0);
     else newAttrColumn.push(parseFloat(allAttributesValuesList[i].value));
@@ -137,7 +163,7 @@ document.getElementById("create-tree__button").addEventListener("click", () => {
   for (let i = 0; i < rows; i++) {
     objectList[i] = Object.create(Object_cluster);
     if (IDsList[i].value === "") objectList[i].identifier = [`${i}`];
-    else objectList[i].identifier = [IDsList[i].value];
+    else objectList[i].identifier = [IDsList[i].value]; ////IDsList[i].value
     attrArray = [];
     for (let j = 0; j < columns; j++) {
       attrArray.push(attributesValueList[j][i]);
@@ -146,20 +172,25 @@ document.getElementById("create-tree__button").addEventListener("click", () => {
   }
 
   removeTree();
+
   console.time("metric");
-  if (document.getElementById("Euclid-distance").checked) {
-    distanceCalculation(objectList, EuclidDistance);
-  } else {
+
+  if (document.getElementById("ultrametric-distance").checked) {
+    distanceCalculation(objectList, ultrametricDistance);
+  } else if (document.getElementById("max-distance").checked) {
     distanceCalculation(objectList, maxUltrametricDistance);
+  } else {
+    distanceCalculation(objectList, EuclidDistance);
   }
+
   console.timeEnd("metric");
 
   const mainCluster = hierarchicalClustering(objectList);
   let nodesIDCopy = [...nodes.clusterID];
 
   const dataTree = createTreeStructure(mainCluster, nodesIDCopy);
-  const rootElement = document.getElementById("dendograme-area");
-  renderTree(dataTree, rootElement, 1, midlePosition);
+
+  renderTree(dataTree, mainRoot, midlePosition, 1, 0);
 });
 
 document.getElementById("change-size__button").addEventListener("click", () => {
